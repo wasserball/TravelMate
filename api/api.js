@@ -1,47 +1,47 @@
-var express = require("express");
-var app = express();
-var bodyParser = require("body-parser");
-var mongoose   = require("mongoose");
-var cors = require('cors');
-var request = require('request');
-mongoose.connect("localhost/travelmate");
+(function () {
+    "use strict";
 
-var Hotel = require("./models/hotel");
+    var express = require("express");
+    var app = express();
+    var bodyParser = require("body-parser");
+    var mongoose = require("mongoose");
+    var cors = require("cors");
+    var request = require("request");
+    mongoose.connect("localhost/travelmate");
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cors());
+    var Hotel = require("./models/hotel");
 
-var port = process.env.PORT || 8080;
-var router = express.Router();
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+    app.use(cors());
 
-router.get("/", function(req, res) {
-    res.json({ message: "Welcome to the TravelMate API!" });
-});
+    var port = process.env.PORT || 8080;
+    var router = express.Router();
 
-router.route("/hotels")
-
-    .post(function(req, res) {
-        var hotel = new Hotel(req.body);
-
-        hotel.save(function(err) {
-            if (err)
-                res.send(err);
-
-            res.json({ message: "hotel " + hotel.name + " created!" });
-        });
-    })
-
-    .get(function(req, res) {
-        Hotel.find(function(err, hotels) {
-            if (err)
-                res.send(err);
-
-            res.json(hotels);
-        });
+    router.get("/", function(req, res) {
+        res.json({ message: "Welcome to the TravelMate API!" });
     });
 
-router.post("/hotels/search", function(req, res) {
+    router.route("/hotels")
+
+        .post(function(req, res) {
+            var hotel = new Hotel(req.body);
+
+            hotel.save(function(err) {
+                if (err) { return res.send(err); }
+                res.json({ message: "hotel " + hotel.name + " created!" });
+            });
+        })
+
+        .get(function(req, res) {
+            Hotel.find(function(err, hotels) {
+                if (err) { return res.send(err); }
+
+                res.json(hotels);
+            });
+        });
+
+    router.post("/hotels/search", function(req, res) {
         var guestLocation = req.body.loc;
 
         Hotel.findOne(
@@ -57,169 +57,141 @@ router.post("/hotels/search", function(req, res) {
                 }
             }, {"name": 1, "rooms.$": 1 },
             function (err, hotel) {
-                if (err)
-                    res.send(err);
+                if (err) { return res.send(err); }
 
                 res.json(hotel);
             }
         );
     });
 
-function updateHotel(hotelId, path) {
-    Hotel.findOne(
-        {
-            "_id": hotelId
-        },
-        function (err, hotel) {
-            if (err)
-                console.log(err);
+    function updateHotel(hotelId, path) {
+        Hotel.findOne(
+            {
+                "_id": hotelId
+            },
+            function (err, hotel) {
+                if (err) { return res.send(err); }
 
-            var url = hotel.apiUrl + path;
+                var url = hotel.apiUrl + path;
 
-            request.post(url, function (error, response, body) {
-                if (error) {
-                    res.send(error);
-                } else {
-                    console.log("hotel " + hotel.name +  " updated");
-                }
-            });
-        }
-    );
-}
+                request.post(url, function (error, response, body) {
+                    if (error) {
+                        return res.send(error);
+                    } else {
+                        console.log("hotel " + hotel.name + " updated");
+                    }
+                });
+            }
+        );
+    }
 
-router.post("/hotels/:hotel_id/book", function(req, res) {
+    router.post("/hotels/:hotel_id/book", function(req, res) {
 
-    var hotelId = req.params.hotel_id;
+        var hotelId = req.params.hotel_id;
 
-    Hotel.update(
-        {
-            "_id": hotelId,
-            "rooms.id": req.body.room_id
-        },
-        { $set: { "rooms.$.booked": true, "rooms.$.guest.name": req.body.guest.name } },
-        function (err, raw) {
-            if (err)
-                res.send(err);
+        Hotel.update(
+            {
+                "_id": hotelId,
+                "rooms.id": req.body.room_id
+            },
+            { $set: { "rooms.$.booked": true, "rooms.$.guest.name": req.body.guest.name } },
+            function (err) {
+                if (err) { return res.send(err); }
 
-            updateHotel(hotelId, "/add");
+                updateHotel(hotelId, "/add");
 
-            var responseMessage = "Room " + req.body.room_id + " in hotel with id " + hotelId + " booked.";
-            res.json({ message: responseMessage });
-        }
-    );
+                var responseMessage = "Room " + req.body.room_id + " in hotel with id " + hotelId + " booked.";
+                res.json({ message: responseMessage });
+            }
+        );
 
-});
+    });
 
-router.post("/hotels/:hotel_id/reset/:service_id", function (req, res) {
+    router.post("/hotels/:hotel_id/reset/:service_id", function (req, res) {
 
-    var hotelId = req.params.hotel_id;
-    var serviceId = req.params.service_id;
-    var roomId = req.body.room_id
+        var hotelId = req.params.hotel_id;
+        var serviceId = req.params.service_id;
+        var roomId = req.body.room_id;
 
-    Hotel.findOne(hotelId,
-        function (err, hotel) {
-            if (err)
-                console.log(err);
+        Hotel.findOne(hotelId,
+            function (err, hotel) {
+                if (err) { return res.send(err); }
 
-            var rooms = hotel.rooms;
+                var rooms = hotel.rooms;
 
-            for (var i = 0; i < rooms.length; i++) {
-                if (hotel.rooms[i].id == roomId) {
-                    var tasks = hotel.rooms[i].guest.tasks;
+                for (var i = 0; i < rooms.length; i++) {
+                    if (hotel.rooms[i].id === roomId) {
+                        var tasks = hotel.rooms[i].guest.tasks;
 
-                    for (var j = 0; j < tasks.length; j++) {
-                        if (tasks[j].id == serviceId) {
+                        for (var j = 0; j < tasks.length; j++) {
+                            if (tasks[j].id === serviceId) {
 
-                            console.log("Service:");
-                            console.log(hotel.rooms[i].guest.tasks[j]);
+                                console.log(hotel.rooms[i].guest.tasks[j]);
 
-                            hotel.rooms[i].guest.tasks.splice(j, 1);
+                                hotel.rooms[i].guest.tasks.splice(j, 1);
+                            }
                         }
                     }
                 }
+
+                hotel.save(function(err) {
+                    if (err) { return res.send(err); }
+
+                    res.json({ message: "hotel " + hotel.name + " cleared service with the id: " + serviceId + "!" });
+                });
             }
+        );
+    });
 
-            hotel.save(function(err) {
-                if (err)
-                    res.send(err);
+    router.post("/hotels/:hotel_id/reset", function (req, res) {
 
-                res.json({ message: "hotel " + hotel.name + " cleared service with the id: " + serviceId +"!" });
-            });
-        }
-    );
+        var hotelId = req.params.hotel_id;
 
-    //Hotel.update(
-    //    {
-    //        //"_id": hotelId,
-    //        //"rooms.id": req.body.room_id
-    //        // "rooms.guest.tasks": { "$elemMatch": { "id": serviceId } }
-    //    },
-    //    { $pull: { "rooms": { "guest.tasks": { $elemMatch: { id: serviceId } } } } },
-    //    { multi: true },
-    //    function (err, raw) {
-    //        if (err)
-    //            res.send(err);
-    //
-    //        console.log(serviceId);
-    //        console.log(req.body.room_id);
-    //
-    //        // updateHotel(hotelId, "/remove");
-    //
-    //        res.json(raw);
-    //    }
-    //);
-});
+        Hotel.update(
+            {
+                "_id": hotelId,
+                "rooms": { "$elemMatch": { booked: true } }
+            },
+            { $set: { "rooms.$.booked": false, "rooms.$.guest.tasks": [] } },
+            function (err, raw) {
+                if (err) { return res.send(err); }
 
-router.post("/hotels/:hotel_id/reset", function (req, res) {
+                updateHotel(hotelId, "/remove");
 
-    var hotelId = req.params.hotel_id;
+                res.json(raw);
+            }
+        );
+    });
 
-    Hotel.update(
-        {
-            "_id": hotelId,
-            "rooms": { "$elemMatch": { booked: true } }
-        },
-        { $set: { "rooms.$.booked": false, "rooms.$.guest.tasks": [] } },
-        function (err, raw) {
-            if (err)
-                res.send(err);
+    router.post("/hotels/:hotel_id/service", function (req, res) {
 
-            updateHotel(hotelId, "/remove");
+        var hotelId = req.params.hotel_id;
+        var service = {
+            "name": req.body.name,
+            "sendDate": req.body.sendDate,
+            "id": mongoose.Types.ObjectId()
+        };
 
-            res.json(raw);
-        }
-    );
-});
+        Hotel.update(
+            {
+                "_id": hotelId,
+                "rooms.id": req.body.room_id
+            },
+            { "$push": { "rooms.$.guest.tasks": service } },
+            function (err, raw) {
+                if (err) { return res.send(err); }
 
-router.post("/hotels/:hotel_id/service", function (req, res) {
+                updateHotel(hotelId, "/update");
 
-    var hotelId = req.params.hotel_id;
-    var service = {
-        "name": req.body.name,
-        "sendDate": req.body.sendDate,
-        "id": mongoose.Types.ObjectId()
-    };
+                var responseMessage = "Room " + req.body.room_id + " in hotel with id " + req.body.hotelId + " has a new service registered.";
+                res.json({ message: responseMessage });
+            }
+        );
 
-    Hotel.update(
-        {
-            "_id": hotelId,
-            "rooms.id": req.body.room_id
-        },
-        { "$push": { "rooms.$.guest.tasks": service } },
-        function (err, raw) {
-            if (err)
-                res.send(err);
+    });
 
-            updateHotel(hotelId, "/update");
+    app.use("/api", router);
 
-            var responseMessage = "Room " + req.body.room_id + " in hotel with id " + req.body.hotelId + " has a new service registered.";
-            res.json({ message: responseMessage });
-        }
-    );
-
-});
-
-app.use("/api", router);
-
-app.listen(port);
-console.log("TravelMate API started on " + port);
+    app.listen(port);
+    console.log("TravelMate API started on " + port);
+}());
