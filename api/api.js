@@ -93,7 +93,7 @@ router.post("/hotels/:hotel_id/book", function(req, res) {
 
     Hotel.update(
         {
-            "_id": req.params.hotel_id,
+            "_id": hotelId,
             "rooms.id": req.body.room_id
         },
         { $set: { "rooms.$.booked": true, "rooms.$.guest.name": req.body.guest.name } },
@@ -116,7 +116,7 @@ router.post("/hotels/:hotel_id/reset", function (req, res) {
 
     Hotel.update(
         {
-            "_id": req.params.hotel_id,
+            "_id": hotelId,
             "rooms": { "$elemMatch": { booked: true } }
         },
         { $set: { "rooms.$.booked": false, "rooms.$.guest.tasks": [] } },
@@ -136,12 +136,13 @@ router.post("/hotels/:hotel_id/service", function (req, res) {
     var hotelId = req.params.hotel_id;
     var service = {
         "name": req.body.name,
-        "sendDate": req.body.sendDate
+        "sendDate": req.body.sendDate,
+        "id": mongoose.Types.ObjectId()
     };
 
     Hotel.update(
         {
-            "_id": req.params.hotel_id,
+            "_id": hotelId,
             "rooms.id": req.body.room_id
         },
         { "$push": { "rooms.$.guest.tasks": service } },

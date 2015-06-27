@@ -44,7 +44,7 @@ var HotelSchema   = new Schema({
                     "nameFirst": String,
                     "nameLast": String
                 },
-                "tasks": Array
+                "tasks": []
             },
             "features": {
                 "wifi": Boolean,
