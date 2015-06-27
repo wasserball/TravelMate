@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:deviceIds="wear">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Willkommen!"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:textSize="22sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ihre Zimmernummer:"
+        android:gravity="center"
+        android:textColor="@color/grey_light"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="267"
+        android:fontFamily="sans-serif-light"
+        android:textSize="25sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Halten Sie die Uhr vor das Türschloss, um dieses zu öffnen."
+        android:layout_marginBottom="3dp"
+        android:textColor="@color/grey_light"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:textSize="12sp"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:freezesText="true"/>
+
+</LinearLayout>
