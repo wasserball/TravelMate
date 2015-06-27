@@ -17,7 +17,7 @@ router.get("/", function(req, res) {
 });
 
 router.route('/hotels')
-    
+
     .post(function(req, res) {
         var hotel = new Hotel(req.body);
 
@@ -27,7 +27,6 @@ router.route('/hotels')
 
             res.json({ message: "hotel " + hotel.name + " created!" });
         });
-
     })
 
     .get(function(req, res) {
