@@ -20,9 +20,6 @@
         "max": 10
       }
     },
-    "suitableFor": {
-      "Partygänger": true,
-      "Singles": true
-    }
+    "suitableFor": ["Partygänger", "Singles"]
   }
 }
