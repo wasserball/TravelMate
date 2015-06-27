@@ -110,6 +110,66 @@ router.post("/hotels/:hotel_id/book", function(req, res) {
 
 });
 
+router.post("/hotels/:hotel_id/reset/:service_id", function (req, res) {
+
+    var hotelId = req.params.hotel_id;
+    var serviceId = req.params.service_id;
+    var roomId = req.body.room_id
+
+    Hotel.findOne(hotelId,
+        function (err, hotel) {
+            if (err)
+                console.log(err);
+
+            var rooms = hotel.rooms;
+
+            for (var i = 0; i < rooms.length; i++) {
+                if (hotel.rooms[i].id == roomId) {
+                    var tasks = hotel.rooms[i].guest.tasks;
+
+                    for (var j = 0; j < tasks.length; j++) {
+                        if (tasks[j].id == serviceId) {
+
+                            console.log("Service:");
+                            console.log(hotel.rooms[i].guest.tasks[j]);
+
+                            hotel.rooms[i].guest.tasks.splice(j, 1);
+                        }
+                    }
+                }
+            }
+
+            hotel.save(function(err) {
+                if (err)
+                    res.send(err);
+
+                res.json({ message: "hotel " + hotel.name + " cleared service with the id: " + serviceId +"!" });
+            });
+        }
+    );
+
+    //Hotel.update(
+    //    {
+    //        //"_id": hotelId,
+    //        //"rooms.id": req.body.room_id
+    //        // "rooms.guest.tasks": { "$elemMatch": { "id": serviceId } }
+    //    },
+    //    { $pull: { "rooms": { "guest.tasks": { $elemMatch: { id: serviceId } } } } },
+    //    { multi: true },
+    //    function (err, raw) {
+    //        if (err)
+    //            res.send(err);
+    //
+    //        console.log(serviceId);
+    //        console.log(req.body.room_id);
+    //
+    //        // updateHotel(hotelId, "/remove");
+    //
+    //        res.json(raw);
+    //    }
+    //);
+});
+
 router.post("/hotels/:hotel_id/reset", function (req, res) {
 
     var hotelId = req.params.hotel_id;

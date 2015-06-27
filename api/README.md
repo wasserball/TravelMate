@@ -114,6 +114,27 @@ Lets the user send room service requests.
 }
 ```
 
+### /api/hotels/:hotel_id/reset/:service_id
+#### POST
+The hotel backend can remove service requests from the database.
+
+*acceptable request representations:*
+
+* application/json
+
+##### request query parameters
+
+| parameter        | value           | example  |
+| ------------- |:-------------:| -----:|
+| room_id      | String | room2 |
+
+##### example request
+```
+{
+    "room_id": "room2"
+}
+```
+
 ### /api/hotels/:hotel_id/reset
 #### POST
 Resets all booked rooms to free.
