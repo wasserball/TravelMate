@@ -10,6 +10,116 @@ Creates a new hotel.
 
 * application/json
 
+##### request query parameters
+
+| parameter        | value           | example  |
+| ------------- |:-------------:| -----:|
+| name      | String | Hotel Melia Düsseldorf |
+| apiUrl      | String | http://192.168.243.230:80 |
+| stars      | int | 4 |
+| address      | Object | { "street": "Inselstraße 2", "city": "Düsseldorf", "zip": "40479", "country": "Germany" } |
+| breakfastTypes      | Array | [ "european", "continental", "vegetarian" ] |
+| loc      | [GeoJSON Point](http://geojson.org/geojson-spec.html#point) | { "type": "Point", "coordinates": [ 6.778368, 51.233145] } |
+| suitableFor      | Object | { "Partygänger": true, "Geschäftsleute": true, "Singles": true, "Familien": true, "Hochzeitsreisende": false } |
+| features      | Object | { "pool": true, "parking": true, "sauna": true } |
+| distancesInKm      | Object | { "aiprort": 7, "cityCentre": 0.5 } |
+| rooms      | Array | - |
+
+
+##### example request
+```
+{
+  "name": "Hotel Melia Düsseldorf",
+  "apiUrl": "http://192.168.243.230:80",
+  "stars": 4,
+  "address": {
+    "street": "Inselstraße 2",
+    "city": "Düsseldorf",
+    "zip": "40479",
+    "country": "Germany"
+  },
+  "breakfastTypes": [
+    "european",
+    "continental",
+    "vegetarian"
+  ],
+  "loc": {
+    "type": "Point",
+    "coordinates": [ 6.778368, 51.233145]
+  },
+  "suitableFor": {
+    "Partygänger": true,
+    "Geschäftsleute": true,
+    "Singles": true,
+    "Familien": true,
+    "Hochzeitsreisende": false
+  },
+  "features": {
+    "pool": true,
+    "parking": true,
+    "sauna": true
+  },
+  "distancesInKm": {
+    "aiprort": 7,
+    "cityCentre": 0.5
+  },
+  "rooms": [
+    {
+      "id": "room1",
+      "numberOfAdults": 2,
+      "costPerNightInEuro": 98.10,
+      "roomNumber": 23,
+      "floor": 10,
+      "features": {
+        "wifi": true,
+        "minibar": true
+      },
+      "availability": {
+        "from": "2015-06-27T18:25:43.511Z",
+        "to": "2015-07-04T18:25:43.511Z"
+      },
+      "booked": true,
+      "bookingDates": [
+        {
+          "from": "2015-06-27T18:25:43.511Z",
+          "to": "2015-07-04T18:25:43.511Z"
+        },
+        {
+          "from": "2015-06-27T18:25:43.511Z",
+          "to": "2015-07-04T18:25:43.511Z"
+        }
+      ]
+    },
+    {
+      "id": "room2",
+      "numberOfAdults": 1,
+      "costPerNightInEuro": 49.05,
+      "roomNumber": 267,
+      "floor": 10,
+      "features": {
+        "wifi": true,
+        "minibar": false
+      },
+      "availability": {
+        "from": "2015-06-27T18:25:43.511Z",
+        "to": "2015-07-04T18:25:43.511Z"
+      },
+      "booked": false,
+      "bookingDates": [
+        {
+          "from": "2015-06-27T18:25:43.511Z",
+          "to": "2015-07-04T18:25:43.511Z"
+        },
+        {
+          "from": "2015-06-27T18:25:43.511Z",
+          "to": "2015-07-04T18:25:43.511Z"
+        }
+      ]
+    }
+  ]
+}
+```
+
 #### GET
 Returns all hotels.
 
