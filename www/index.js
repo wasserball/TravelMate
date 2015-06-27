@@ -15,9 +15,20 @@ app.use("/img", express.static(__dirname + '/img'));
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
-app.post("/hotels", function(req, res, next) {
-  io.sockets.emit("hotel message", req.body.data);
+
+app.post("/update", function(req, res, next) {
+  io.sockets.emit("update");
+  res.send(req.body);
+});
+
+app.post("/add", function(req, res, next) {
+  io.sockets.emit("add");
   res.send(req.body.data);
+});
+
+app.post("/remove", function(req, res, next) {
+  io.sockets.emit("remove");
+  res.send(req.body);
 });
 
 io.on('connection', function(socket){
