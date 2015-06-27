@@ -48,7 +48,6 @@ router.route('/hotels/search')
         Hotel.findOne(
             {
                 "loc": {
-                    //"$near": guestLocation, "$maxDistance": 1000
                     "$near": {
                         "$geometry": guestLocation,
                         "$maxDistance": 100
