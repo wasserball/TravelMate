@@ -60,3 +60,32 @@ Finds the nearest hotel based on coordinates.
   }
 }
 ```
+
+### /api/hotels/book
+Book a room in a hotel.
+
+*acceptable request representations:*
+
+* application/json
+
+##### request query parameters
+
+| parameter        | value           | example  |
+| ------------- |:-------------:| -----:|
+| hotelId      | String | room2 |
+| room_id      | String | 4 |
+| guest      | Object | "name": { "nameFirst": "Hans", "nameLast": "Huber" } |
+
+##### example request
+```
+{
+  "hotelId": "558eba3aa3b86e043d40e2f2",
+  "room_id": "room2",
+  "guest": {
+    "name": {
+      "nameFirst": "Hans",
+      "nameLast": "Huber"
+    }
+  }
+}
+```
