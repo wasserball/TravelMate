@@ -136,7 +136,7 @@ router.post("/hotels/:hotel_id/service", function (req, res) {
     var hotelId = req.params.hotel_id;
     var service = {
         "name": req.body.name,
-        "sendDate": Date.now()
+        "sendDate": req.body.sendDate
     };
 
     Hotel.update(
