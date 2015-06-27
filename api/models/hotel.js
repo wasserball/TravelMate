@@ -38,6 +38,17 @@ var HotelSchema   = new Schema({
             "costPerNightInEuro": Number,
             "roomNumber": Number,
             "floor": Number,
+            "guest": {
+                "name": {
+                    "nameFirst": String,
+                    "nameLast": String
+                },
+                "stay": {
+                    "from": { type: Date, default: Date.now },
+                    "to": { type: Date, default: Date.now }
+                },
+                "tasks": Array
+            },
             "features": {
                 "wifi": Boolean,
                 "minibar": Boolean

@@ -1,14 +1,10 @@
 {
-  "hotelName": "Hotel Melia Düsseldorf",
-  "room_id": "4321d",
+  "hotelId": "558eba3aa3b86e043d40e2f2",
+  "room_id": "room2",
   "guest": {
     "name": {
       "nameFirst": "Hans",
       "nameLast": "Huber"
     }
-  },
-  "stay": {
-    "from": "2015-06-27T18:25:43.511Z",
-    "to": "2015-07-04T18:25:43.511Z"
   }
 }
