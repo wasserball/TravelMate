@@ -3,6 +3,7 @@ var Schema       = mongoose.Schema;
 
 var HotelSchema   = new Schema({
     "name": String,
+    "apiUrl": String,
     "stars": Number,
     "address": {
         "street": String,

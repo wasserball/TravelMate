@@ -61,7 +61,7 @@ Finds the nearest hotel based on coordinates.
 }
 ```
 
-### /api/hotels/book
+### /api/hotels/:hotel_id/book
 Book a room in a hotel.
 
 *acceptable request representations:*
@@ -72,7 +72,6 @@ Book a room in a hotel.
 
 | parameter        | value           | example  |
 | ------------- |:-------------:| -----:|
-| hotelId      | String | 558ebcda8cf4e2463eba567f |
 | room_id      | String | room2 |
 | guest      | Object | "name": { "nameFirst": "Hans", "nameLast": "Huber" } |
 
@@ -90,22 +89,5 @@ Book a room in a hotel.
 }
 ```
 
-### /api/hotels/book/reset
+### /api/hotels/:hotel_id/reset
 Resets all booked rooms to free.
-
-*acceptable request representations:*
-
-* application/json
-
-##### request query parameters
-
-| parameter        | value           | example  |
-| ------------- |:-------------:| -----:|
-| hotelId      | String | 558ebcda8cf4e2463eba567f |
-
-##### example request
-```
-{
-  "hotelId": "558ebcda8cf4e2463eba567f"
-}
-```

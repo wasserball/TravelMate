@@ -1,5 +1,6 @@
 {
   "name": "Hotel Melia Düsseldorf",
+  "apiUrl": "http://192.168.243.230:80",
   "stars": 4,
   "address": {
     "street": "Inselstraße 2",

@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require("body-parser");
 var mongoose   = require("mongoose");
 var cors = require('cors');
+var request = require('request');
 mongoose.connect("localhost/travelmate");
 
 var Hotel = require("./models/hotel");
@@ -64,13 +65,35 @@ router.post("/hotels/search", function(req, res) {
         );
     });
 
-router.post("/hotels/book", function(req, res) {
+function updateHotel(hotelId) {
+    Hotel.findOne(
+        {
+            "_id": hotelId
+        },
+        function (err, hotel) {
+            if (err)
+                console.log(err);
 
-    console.log(req);
+            var url = hotel.apiUrl + "/newdata";
+
+            request.post(url, function (error, response, body) {
+                if (error) {
+                    res.send(error);
+                } else {
+                    console.log("hotel " + hotel.name +  " updated");
+                }
+            });
+        }
+    );
+}
+
+router.post("/hotels/:hotel_id/book", function(req, res) {
+
+    var hotelId = req.params.hotel_id;
 
     Hotel.update(
         {
-            "_id": req.body.hotelId,
+            "_id": req.params.hotel_id,
             "rooms.id": req.body.room_id
         },
         { $set: { "rooms.$.booked": true } },
@@ -78,18 +101,19 @@ router.post("/hotels/book", function(req, res) {
             if (err)
                 res.send(err);
 
-            var responseMessage = "Room " + req.body.room_id + " in hotel with id " + req.body.hotelId + " booked.";
+            updateHotel(hotelId);
 
+            var responseMessage = "Room " + req.body.room_id + " in hotel with id " + req.body.hotelId + " booked.";
             res.json({ message: responseMessage });
         }
     );
 
 });
 
-router.post("/hotels/book/reset", function (req, res) {
+router.post("/hotels/:hotel_id/reset", function (req, res) {
     Hotel.update(
         {
-            "_id": req.body.hotelId,
+            "_id": req.params.hotel_id,
             "rooms": { "$elemMatch": { booked: true } }
         },
         { $set: { "rooms.$.booked": false } },
@@ -100,6 +124,36 @@ router.post("/hotels/book/reset", function (req, res) {
             res.json(raw);
         }
     );
+});
+
+router.post("/hotels/:hotel_id/service", function (req, res) {
+    // res.json(req.params.hotel_id);
+
+    Hotel.findOne(
+        {
+            "_id": req.params.hotel_id
+        },
+        function (err, hotel) {
+            if (err)
+                res.send(err);
+
+            res.json(hotel.apiUrl);
+        }
+    );
+
+    //Hotel.update(
+    //    {
+    //        "_id": req.body.hotelId,
+    //        "rooms": { "$elemMatch": { booked: true } }
+    //    },
+    //    { $set: { "rooms.$.booked": false } },
+    //    function (err, raw) {
+    //        if (err)
+    //            res.send(err);
+    //
+    //        res.json(raw);
+    //    }
+    //);
 });
 
 app.use("/api", router);
