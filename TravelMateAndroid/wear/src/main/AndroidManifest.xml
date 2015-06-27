@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="link.fls.travelmate" >
+
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <uses-permission android:name="ANDROID.PERMISSION.VIBRATE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.DeviceDefault" >
+
+        <activity
+            android:name=".cards.DisplayHotelActivity"
+            android:allowEmbedded="true"
+            android:exported="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.DeviceDefault.Light" >
+        </activity>
+
+        <activity android:name=".cards.BookingActivity"/>
+
+        <activity android:name=".cards.QrCodeActivity"/>
+
+        <activity android:name=".cards.CheckInActivity"
+            android:allowEmbedded="true"
+            android:exported="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.DeviceDefault.Light"/>
+
+        <activity android:name=".cards.InRoomActivity"
+            android:allowEmbedded="true"
+            android:exported="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.DeviceDefault.Light"/>
+
+        <activity android:name="android.support.wearable.activity.ConfirmationActivity"/>
+
+        <receiver
+            android:name=".PostHotelNotificationReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="link.fls.travelmate.SHOW_BOOKING" />
+                <action android:name="link.fls.travelmate.HIDE_BOOKING" />
+                <action android:name="link.fls.travelmate.SHOW_LOGIN"/>
+                <action android:name="link.fls.travelmate.SHOW_INROOM"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".WearableListenerService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+        </service>
+    </application>
+
+    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+
+</manifest>

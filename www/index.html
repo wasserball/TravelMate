@@ -10,93 +10,102 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/handlebars-v3.0.3.js"></script>
+    <script src="js/handlebars-intl.min.js"></script>
+
+    <script src="js/jquery.playSound.js"></script>
+
     <link rel="stylesheet" href="css/main.css">
   </head>
   
   <body>
-    <!-- Navbar goes here -->
-    <!-- Page Layout here -->
-    <div class="row">
-      <div class="col s3 sidebar">
-        <!-- Grey navigation panel -->
-        <div class="row">
-          <!--ul class="collection">
+      <!-- Navbar goes here -->
+      <!-- Page Layout here -->
+      <div class="row">
+        <div class="col s3 sidebar">
+          <!-- Grey navigation panel -->
+          <div class="row">
+
+            <!--ul class="collection">
 
          <li class="logo"><a id="logo-container" href="http://materializecss.com/" class="brand-logo">
             <img src="img/trivago_logo.png"></a>
           </li>
         </ul-->
-          <div class="col s12">
-            <img src="img/trivago_logo.png">
-            <div class="card">
-              <div class="card-image">
-                <img src="img/hotels/melia.jpeg">
-                <span class="card-title">Meliá</span>
-              </div>
-              <div class="card-content">
-                <p>Düsseldorf</p>
-              </div>
+            <div class="col s12">
+              <img src="img/trivago_logo.png">
+              <div id="hotel"></div>
             </div>
           </div>
+          <ul class="collection with-header">
+            <li class="collection-header">
+              <h4>Rooms
+                <a href="#!" class="secondary-content"><i class="Small material-icons">vpn_key</i></a>
+              </h4>
+            </li>
+            <div id="hotelrooms"></div>
+          </ul>
         </div>
-        <ul class="collection with-header">
-          <li class="collection-header">
-            <h4>
-              Rooms <a href="#!" class="secondary-content"><i class="Small material-icons">vpn_key</i></a></h4>
-          </li>
-          <li class="collection-item">
-            <div>Total
-              <a href="#!" class="secondary-content">42</a>
-            </div>
-          </li>
-          <li class="collection-item">
-            <div>Booked
-              <a href="#!" class="secondary-content">3</a>
-            </div>
-          </li>
-          <li class="collection-item">
-            <div>Free
-              <a href="#!" class="secondary-content">39</a>
-            </div>
-          </li>
-        </ul>
+        <div class="col s7" id="main">
+          <ul class="collapsible popout" data-collapsible="accordion" id="hotel-entry"></ul>
+        </div>
       </div>
-      <div class="col s7">
-        <ul class="collapsible popout" data-collapsible="accordion">
-          <li>
+
+
+      <script src="js/main.js"></script>
+      <script id="hotel-template" type="text/x-handlebars-template">
+        <div class="card">
+          <div class="card-image">
+            <img src="{{url}}">
+            <span class="card-title">{{name}}</span>
+          </div>
+          <div class="card-content">
+            <p>{{location.street}}</p>
+            {{location.zip}} {{location.city}}<br>
+            {{location.country}}
+          </div>
+        </div>
+      </script>
+      <script id="hotelrooms-template" type="text/x-handlebars-template">
+        <li class="collection-item">
+          <div>Total
+            <a href="#!" class="secondary-content">{{total}}</a>
+          </div>
+        </li>
+        <li class="collection-item">
+          <div>Booked
+            <a href="#!" class="secondary-content">{{booked}}</a>
+          </div>
+        </li>
+        <li class="collection-item">
+          <div>Free
+            <a href="#!" class="secondary-content">{{free}}</a>
+          </div>
+        </li>
+      </script>
+      <script id="hotel-entry-template" type="text/x-handlebars-template">
+        {{#each rooms}}
+          <li class="{{this.booked}} hotel-id" id="{{_id}}">
             <div class="collapsible-header"id="12345">
               <i class="material-icons">vpn_key</i>
-              01 - <span>Max Mustermann</span>
-              <a href="#!" class="secondary-content">42</a>
+              Floor: {{floor}},  
+              Room: {{roomNumber}}, 
+              01 - <span>{{guest.name.nameFirst}} {{guest.name.nameLast}}</span> - Number Of Adults: {{numberOfAdults}}
+              <a href="#!" class="secondary-content">{{guest.tasks.length}}</a>
             </div>
             <div class="collapsible-body">
-              <p>Max Mustermann</p>
+              <form action="#">
+              {{#each guest.tasks}}
+                  <p>
+                    <input type="checkbox" id="{{id}}" />
+                    <label for="{{id}}"> {{name}} : {{formatDate sendDate day="numeric" month="long" year="numeric"}}</label>
+                  </p>
+              {{/each}}
+              </form>
             </div>
           </li>
-          <li>
-            <div class="collapsible-header">
-              <i class="material-icons">vpn_key</i>
-              01 - <span>Petra Müllerfrau</span>
-              <a href="#!" class="secondary-content">0</a>
-            </div>
-            <div class="collapsible-body">
-              <p>...</p>
-            </div>
-          </li>
-          <li>
-            <div class="collapsible-header">
-              <i class="material-icons">vpn_key</i>
-              01 - <span>Seppl Wurst</span>
-              <a href="#!" class="secondary-content">5</a>
-            </div>
-            <div class="collapsible-body">
-               <p>...</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
+          {{/each}}
+      </script>
   </body>
 
 </html>
