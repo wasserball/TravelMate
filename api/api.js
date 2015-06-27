@@ -120,14 +120,11 @@
                 var rooms = hotel.rooms;
 
                 for (var i = 0; i < rooms.length; i++) {
-                    if (hotel.rooms[i].id === roomId) {
+                    if (hotel.rooms[i].id == roomId) {
                         var tasks = hotel.rooms[i].guest.tasks;
 
                         for (var j = 0; j < tasks.length; j++) {
-                            if (tasks[j].id === serviceId) {
-
-                                console.log(hotel.rooms[i].guest.tasks[j]);
-
+                            if (tasks[j].id == serviceId) {
                                 hotel.rooms[i].guest.tasks.splice(j, 1);
                             }
                         }
@@ -166,6 +163,7 @@
     router.post("/hotels/:hotel_id/service", function (req, res) {
 
         var hotelId = req.params.hotel_id;
+
         var service = {
             "name": req.body.name,
             "sendDate": req.body.sendDate,
