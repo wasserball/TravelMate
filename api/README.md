@@ -33,7 +33,7 @@ Finds the nearest hotel based on coordinates.
 | filter.suitableFor      | Array | ["Partygänger", "Singles"] |
 
 ##### example request
-´´´
+```
 {
   "loc": {
     "type": "Point",
@@ -59,4 +59,4 @@ Finds the nearest hotel based on coordinates.
     "suitableFor": ["Partygänger", "Singles"]
   }
 }
-´´´
+```
