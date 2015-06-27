@@ -78,7 +78,6 @@ Book a room in a hotel.
 ##### example request
 ```
 {
-  "hotelId": "558eba3aa3b86e043d40e2f2",
   "room_id": "room2",
   "guest": {
     "name": {
