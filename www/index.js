@@ -6,15 +6,17 @@ var body_parser = require('body-parser');
 app.use(body_parser.json());
 
 
-app.use("/styles", express.static(__dirname + '/styles'));
-
+app.use("/css", express.static(__dirname + '/css'));
+app.use("/js", express.static(__dirname + '/js'));
+app.use("/font", express.static(__dirname + '/font'));
+app.use("/img", express.static(__dirname + '/img'));
 
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 app.post("/hotels", function(req, res, next) {
-  io.sockets.emit("hotel message", req.body.data.type);
+  io.sockets.emit("hotel message", req.body.data);
   res.send(req.body.data);
 });
 
