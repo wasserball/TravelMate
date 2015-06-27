@@ -72,8 +72,8 @@ Book a room in a hotel.
 
 | parameter        | value           | example  |
 | ------------- |:-------------:| -----:|
-| hotelId      | String | room2 |
-| room_id      | String | 4 |
+| hotelId      | String | 558ebcda8cf4e2463eba567f |
+| room_id      | String | room2 |
 | guest      | Object | "name": { "nameFirst": "Hans", "nameLast": "Huber" } |
 
 ##### example request
@@ -87,5 +87,25 @@ Book a room in a hotel.
       "nameLast": "Huber"
     }
   }
+}
+```
+
+### /api/hotels/book/reset
+Resets all booked rooms to free.
+
+*acceptable request representations:*
+
+* application/json
+
+##### request query parameters
+
+| parameter        | value           | example  |
+| ------------- |:-------------:| -----:|
+| hotelId      | String | 558ebcda8cf4e2463eba567f |
+
+##### example request
+```
+{
+  "hotelId": "558ebcda8cf4e2463eba567f"
 }
 ```

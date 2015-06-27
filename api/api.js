@@ -2,12 +2,14 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose   = require("mongoose");
+var cors = require('cors');
 mongoose.connect("localhost/travelmate");
 
 var Hotel = require("./models/hotel");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 
 var port = process.env.PORT || 8080;
 var router = express.Router();
@@ -16,7 +18,7 @@ router.get("/", function(req, res) {
     res.json({ message: "Welcome to the TravelMate API!" });
 });
 
-router.route('/hotels')
+router.route("/hotels")
 
     .post(function(req, res) {
         var hotel = new Hotel(req.body);
@@ -38,7 +40,7 @@ router.route('/hotels')
         });
     });
 
-router.post('/hotels/search', function(req, res) {
+router.post("/hotels/search", function(req, res) {
         var guestLocation = req.body.loc;
 
         Hotel.findOne(
@@ -62,7 +64,10 @@ router.post('/hotels/search', function(req, res) {
         );
     });
 
-router.post('/hotels/book', function(req, res) {
+router.post("/hotels/book", function(req, res) {
+
+    console.log(req);
+
     Hotel.update(
         {
             "_id": req.body.hotelId,
@@ -73,10 +78,28 @@ router.post('/hotels/book', function(req, res) {
             if (err)
                 res.send(err);
 
-            res.json(raw);
+            var responseMessage = "Room " + req.body.room_id + " in hotel with id " + req.body.hotelId + " booked.";
+
+            res.json({ message: responseMessage });
         }
     );
 
+});
+
+router.post("/hotels/book/reset", function (req, res) {
+    Hotel.update(
+        {
+            "_id": req.body.hotelId,
+            "rooms": { "$elemMatch": { booked: true } }
+        },
+        { $set: { "rooms.$.booked": false } },
+        function (err, raw) {
+            if (err)
+                res.send(err);
+
+            res.json(raw);
+        }
+    );
 });
 
 app.use("/api", router);
