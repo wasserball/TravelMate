@@ -11,9 +11,9 @@ var HotelSchema   = new Schema({
         "country": String
     },
     "breakfastTypes": Array,
-    "coordinates": {
-        "lat": Number,
-        "lng": Number
+    "loc": {
+        "type": { type: String, default: "Point" },
+        "coordinates": Array
     },
     "suitableFor": {
         "Partygänger": Boolean,

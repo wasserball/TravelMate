@@ -38,6 +38,33 @@ router.route('/hotels')
         });
     });
 
+router.route('/hotels/search')
+
+    .post(function(req, res) {
+        var guestLocation = req.body.loc;
+
+        console.log(guestLocation);
+
+        Hotel.findOne(
+            {
+                "loc": {
+                    //"$near": guestLocation, "$maxDistance": 1000
+                    "$near": {
+                        "$geometry": guestLocation,
+                        "$maxDistance": 100
+                    }
+                }
+            }, function (err, hotel) {
+                if (err)
+                    res.send(err);
+
+                res.json(hotel);
+            }
+        );
+
+        // res.json(guestCoordinates);
+    });
+
 app.use("/api", router);
 
 app.listen(port);

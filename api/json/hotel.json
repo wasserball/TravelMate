@@ -13,9 +13,9 @@
     "continental",
     "vegetarian"
   ],
-  "coordinates": {
-    "lat": 51.233145,
-    "lng": 6.778368
+  "loc": {
+    "type": "Point",
+    "coordinates": [ 6.778368, 51.233145]
   },
   "suitableFor": {
     "Partygänger": true,
