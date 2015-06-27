@@ -1,8 +1,13 @@
-var app = require('express')();
+var express = require("express");
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var body_parser = require('body-parser');
 app.use(body_parser.json());
+
+
+app.use("/styles", express.static(__dirname + '/styles'));
+
 
 
 app.get('/', function (req, res) {
