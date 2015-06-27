@@ -44,10 +44,6 @@ var HotelSchema   = new Schema({
                     "nameFirst": String,
                     "nameLast": String
                 },
-                "stay": {
-                    "from": { type: Date, default: Date.now },
-                    "to": { type: Date, default: Date.now }
-                },
                 "tasks": Array
             },
             "features": {

@@ -65,7 +65,7 @@ router.post("/hotels/search", function(req, res) {
         );
     });
 
-function updateHotel(hotelId) {
+function updateHotel(hotelId, path) {
     Hotel.findOne(
         {
             "_id": hotelId
@@ -74,7 +74,7 @@ function updateHotel(hotelId) {
             if (err)
                 console.log(err);
 
-            var url = hotel.apiUrl + "/newdata";
+            var url = hotel.apiUrl + path;
 
             request.post(url, function (error, response, body) {
                 if (error) {
@@ -96,14 +96,14 @@ router.post("/hotels/:hotel_id/book", function(req, res) {
             "_id": req.params.hotel_id,
             "rooms.id": req.body.room_id
         },
-        { $set: { "rooms.$.booked": true } },
+        { $set: { "rooms.$.booked": true, "rooms.$.guest": req.body.guest } },
         function (err, raw) {
             if (err)
                 res.send(err);
 
-            updateHotel(hotelId);
+            updateHotel(hotelId, "/add");
 
-            var responseMessage = "Room " + req.body.room_id + " in hotel with id " + req.body.hotelId + " booked.";
+            var responseMessage = "Room " + req.body.room_id + " in hotel with id " + hotelId + " booked.";
             res.json({ message: responseMessage });
         }
     );
@@ -111,6 +111,9 @@ router.post("/hotels/:hotel_id/book", function(req, res) {
 });
 
 router.post("/hotels/:hotel_id/reset", function (req, res) {
+
+    var hotelId = req.params.hotel_id;
+
     Hotel.update(
         {
             "_id": req.params.hotel_id,
@@ -121,23 +124,31 @@ router.post("/hotels/:hotel_id/reset", function (req, res) {
             if (err)
                 res.send(err);
 
+            updateHotel(hotelId, "/remove");
+
             res.json(raw);
         }
     );
 });
 
 router.post("/hotels/:hotel_id/service", function (req, res) {
-    // res.json(req.params.hotel_id);
 
-    Hotel.findOne(
+    var hotelId = req.params.hotel_id;
+
+    Hotel.update(
         {
-            "_id": req.params.hotel_id
+            "_id": req.params.hotel_id,
+            "rooms.id": req.body.room_id
         },
-        function (err, hotel) {
+        { "$push": { "rooms.$.guest.tasks": req.body.name } },
+        function (err, raw) {
             if (err)
                 res.send(err);
 
-            res.json(hotel.apiUrl);
+            updateHotel(hotelId, "/update");
+
+            var responseMessage = "Room " + req.body.room_id + " in hotel with id " + req.body.hotelId + " has a new service registered.";
+            res.json({ message: responseMessage });
         }
     );
 
