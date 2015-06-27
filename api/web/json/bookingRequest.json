@@ -1,0 +1,14 @@
+{
+  "hotel_id": "12345d",
+  "room_id": "4321d",
+  "guest": {
+    "name": {
+      "nameFirst": "Hans",
+      "nameLast": "Huber"
+    }
+  },
+  "stay": {
+    "from": "2015-06-27T18:25:43.511Z",
+    "to": "2015-07-04T18:25:43.511Z"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "coordinates": {
+    "lat": 51.233145,
+    "lng": 6.778368
+  },
+  "filter": {
+    "stars": 4,
+    "features": {
+      "pool": true,
+      "parking": true,
+      "sauna": true
+    },
+    "distancesInKm": {
+      "aiprort": 7,
+      "cityCentre": 0.5
+    },
+    "ratings": {
+      "average": {
+        "min": 5,
+        "max": 10
+      }
+    },
+    "suitableFor": {
+      "Partygänger": true,
+      "Singles": true
+    }
+  }
+}

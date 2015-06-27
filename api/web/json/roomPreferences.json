@@ -1,0 +1,11 @@
+{
+  "sendDate": "2015-06-28T08:00:00.511Z",
+  "room_id": "5432d",
+  "wake-up service": "2015-06-28T08:00:00.511Z",
+  "breakfastInRoom": "european",
+  "roomService": {
+    "towels": true,
+    "miniBar": false,
+    "toiletry": true
+  }
+}
