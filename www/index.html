@@ -22,7 +22,7 @@
       <!-- Navbar goes here -->
       <!-- Page Layout here -->
       <div class="row">
-        <div class="col s3 sidebar">
+        <div class="col s12 m3 sidebar">
           <!-- Grey navigation panel -->
           <div class="row">
 
@@ -83,19 +83,15 @@
           </div>
         </li>
       </script>
-      <script id="hotel-entry-template" type="text/x-handlebars-template">
-      
-      {{hotelid}}
+      <script id="hotel-entry-template" type="text/x-handlebars-template">      
         <ul class="collapsible popout hotel-id" id="{{hotelid}}" data-collapsible="accordion" >
-
         {{#each rooms}}
-
           <li class="{{this.booked}} room-id" id="{{id}}">
             <div class="collapsible-header">
               <i class="material-icons">vpn_key</i>
               Floor: {{floor}},  
               Room: {{roomNumber}}, 
-              01 - <span>{{guest.name.nameFirst}} {{guest.name.nameLast}}</span> - Number Of Adults: {{numberOfAdults}}
+              <span>{{guest.name.nameFirst}} {{guest.name.nameLast}}</span> - Number Of Adults: {{numberOfAdults}}
               <a href="#!" class="secondary-content">{{guest.tasks.length}}</a>
             </div>
               <div class="collapsible-body">
@@ -110,10 +106,7 @@
                         </li>
                     {{/each}}
                     </ul>
-
                 </div>
-                
- 
               </div>
           </li>
           {{/each}}

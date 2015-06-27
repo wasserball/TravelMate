@@ -27,8 +27,6 @@ $( document ).ready(function() {
 		getRooms();
 	});
 
-	
-
 	function initCollapsible () {
 		$('.collapsible').collapsible({
       accordion : false
@@ -44,8 +42,6 @@ $( document ).ready(function() {
 		console.log(url);
 		var data = JSON.stringify({"room_id": roomId});
 
-		console.log(data);
-
 		$.ajax({
       type: "POST",
       url: url,
@@ -55,25 +51,18 @@ $( document ).ready(function() {
 
       	var counter = $('#'+taskId).closest('.room-id').find('.secondary-content');
       	counter.html(parseInt(counter.html()) - 1);
-
       	if(response){
       		$('#'+taskId).closest('li').slideUp( 1000, function() {
 				    $('#'+taskId).closest('li').remove();
 
 				  });
-
       	}
-
-      	console.log(response);
-
       },
       error: function( error ){
           // Log any error.
           console.log( "ERROR:", error );
       }
 	  });
-
-
 	});
 		
 	function getRooms () {
