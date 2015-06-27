@@ -62,6 +62,7 @@ Finds the nearest hotel based on coordinates.
 ```
 
 ### /api/hotels/:hotel_id/book
+#### POST
 Book a room in a hotel.
 
 *acceptable request representations:*
@@ -88,5 +89,31 @@ Book a room in a hotel.
 }
 ```
 
+### /api/hotels/:hotel_id/service
+#### POST
+Lets the user send room service requests.
+
+*acceptable request representations:*
+
+* application/json
+
+##### request query parameters
+
+| parameter        | value           | example  |
+| ------------- |:-------------:| -----:|
+| room_id      | String | room2 |
+| sendDate      | String | 2015-06-28T08:00:00.511Z |
+| name      | String | wake-up service |
+
+##### example request
+```
+{
+  "room_id": "room2",
+  "sendDate": "2015-06-28T08:00:00.511Z",
+  "name": "wake-up service"
+}
+```
+
 ### /api/hotels/:hotel_id/reset
+#### POST
 Resets all booked rooms to free.

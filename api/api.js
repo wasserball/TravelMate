@@ -134,13 +134,17 @@ router.post("/hotels/:hotel_id/reset", function (req, res) {
 router.post("/hotels/:hotel_id/service", function (req, res) {
 
     var hotelId = req.params.hotel_id;
+    var service = {
+        "name": req.body.name,
+        "sendDate": Date.now()
+    };
 
     Hotel.update(
         {
             "_id": req.params.hotel_id,
             "rooms.id": req.body.room_id
         },
-        { "$push": { "rooms.$.guest.tasks": req.body.name } },
+        { "$push": { "rooms.$.guest.tasks": service } },
         function (err, raw) {
             if (err)
                 res.send(err);
@@ -152,19 +156,6 @@ router.post("/hotels/:hotel_id/service", function (req, res) {
         }
     );
 
-    //Hotel.update(
-    //    {
-    //        "_id": req.body.hotelId,
-    //        "rooms": { "$elemMatch": { booked: true } }
-    //    },
-    //    { $set: { "rooms.$.booked": false } },
-    //    function (err, raw) {
-    //        if (err)
-    //            res.send(err);
-    //
-    //        res.json(raw);
-    //    }
-    //);
 });
 
 app.use("/api", router);
