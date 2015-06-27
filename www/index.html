@@ -47,7 +47,7 @@
           </ul>
         </div>
         <div class="col s7" id="main">
-          <ul class="collapsible popout" data-collapsible="accordion" id="hotel-entry"></ul>
+          <div id="hotel-entry"></div>
         </div>
       </div>
 
@@ -84,27 +84,40 @@
         </li>
       </script>
       <script id="hotel-entry-template" type="text/x-handlebars-template">
+      
+      {{hotelid}}
+        <ul class="collapsible popout hotel-id" id="{{hotelid}}" data-collapsible="accordion" >
+
         {{#each rooms}}
-          <li class="{{this.booked}} hotel-id" id="{{_id}}">
-            <div class="collapsible-header"id="12345">
+
+          <li class="{{this.booked}} room-id" id="{{id}}">
+            <div class="collapsible-header">
               <i class="material-icons">vpn_key</i>
               Floor: {{floor}},  
               Room: {{roomNumber}}, 
               01 - <span>{{guest.name.nameFirst}} {{guest.name.nameLast}}</span> - Number Of Adults: {{numberOfAdults}}
               <a href="#!" class="secondary-content">{{guest.tasks.length}}</a>
             </div>
-            <div class="collapsible-body">
-              <form action="#">
-              {{#each guest.tasks}}
-                  <p>
-                    <input type="checkbox" id="{{id}}" />
-                    <label for="{{id}}"> {{name}} : {{formatDate sendDate day="numeric" month="long" year="numeric"}}</label>
-                  </p>
-              {{/each}}
-              </form>
-            </div>
+              <div class="collapsible-body">
+                <div class="inner">
+                  <ul class="collection">
+                     <li class="collection-item">Number Of Adults <span class="badge">{{numberOfAdults}}</span></li>
+                  
+                    {{#each guest.tasks}}
+                        <li class="collection-item">
+                          <input type="checkbox" id="{{id}}" />
+                          <label for="{{id}}"> {{name}} : {{formatDate sendDate day="numeric" month="long" year="numeric"}}</label>
+                        </li>
+                    {{/each}}
+                    </ul>
+
+                </div>
+                
+ 
+              </div>
           </li>
           {{/each}}
+          </ul>
       </script>
   </body>
 

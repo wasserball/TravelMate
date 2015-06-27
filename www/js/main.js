@@ -6,19 +6,17 @@ $( document ).ready(function() {
 
 	var socket = io();
 	var allHotelsUrl = 'http://192.168.241.250:8080/api/hotels';
+
 	HandlebarsIntl.registerWith(Handlebars);
 
 	socket.on('update', function(){
 		$.playSound('sounds/reception_bell');
 		Materialize.toast('<i class="material-icons yellow">trending_flat</i> <span> &nbsp;&nbsp; new Task added', 3000);
-
 	  	getRooms();
 	});
 
-
-
 	socket.on('remove', function(){
-		$.playSound('sounds/reception_bell');
+		$.playSound('sounds/recycle_bin');
 		Materialize.toast('<i class="material-icons red">delete</i> <span> &nbsp;&nbsp; cancle Booking', 3000);
 		getRooms();
 	});
@@ -33,21 +31,40 @@ $( document ).ready(function() {
 
 	function initCollapsible () {
 		$('.collapsible').collapsible({
-      accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+      accordion : false
     });
 	}
 
 	$( "#main" ).on( "change", "input", function() {
 
 		var hotelId = $(this).closest('.hotel-id').attr('id');
+		var roomId = $(this).closest('.room-id').attr('id'); 
 		var taskId = $( this ).attr('id');
+		var url = allHotelsUrl + '/' + hotelId + '/reset/' + taskId;
+		console.log(url);
+		var data = JSON.stringify({"room_id": roomId});
+
+		console.log(data);
 
 		$.ajax({
       type: "POST",
-      url: allHotelsUrl,
-      data: {"hotelId": hotelId, "taskId": taskId},
+      url: url,
+      data: data,
       contentType: "application/json",
       success: function( response ){
+
+      	var counter = $('#'+taskId).closest('.room-id').find('.secondary-content');
+      	counter.html(parseInt(counter.html()) - 1);
+
+      	if(response){
+      		$('#'+taskId).closest('li').slideUp( 1000, function() {
+				    $('#'+taskId).closest('li').remove();
+
+				  });
+
+      	}
+
+      	console.log(response);
 
       },
       error: function( error ){
@@ -60,13 +77,14 @@ $( document ).ready(function() {
 	});
 		
 	function getRooms () {
+		console.log('getRooms');
 
 		$.ajax({
       type: "GET",
       url: allHotelsUrl,
       contentType: "application/json",
       success: function( response ){
-      	console.log(response);
+      	renderRooms(response[0]);
       },
       error: function( error ){
           // Log any error.
@@ -78,7 +96,7 @@ $( document ).ready(function() {
 
 	function renderRooms (hotel) {
 
-		console.log(hotel.rooms);
+		console.log(hotel);
 
 		var source   = $("#hotel-template").html();
 		var template = Handlebars.compile(source);
@@ -107,7 +125,7 @@ $( document ).ready(function() {
 
 		source   = $("#hotel-entry-template").html();
 		template = Handlebars.compile(source);
-		context = {rooms: hotel.rooms};
+		context = {rooms: hotel.rooms, hotelid: hotel._id};
 		html    = template(context);
 		$('#hotel-entry').html(html);
 
