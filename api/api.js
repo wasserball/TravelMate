@@ -38,12 +38,8 @@ router.route('/hotels')
         });
     });
 
-router.route('/hotels/search')
-
-    .post(function(req, res) {
+router.post('/hotels/search', function(req, res) {
         var guestLocation = req.body.loc;
-
-        console.log(guestLocation);
 
         Hotel.findOne(
             {
@@ -52,17 +48,36 @@ router.route('/hotels/search')
                         "$geometry": guestLocation,
                         "$maxDistance": 100
                     }
+                },
+                "rooms": {
+                    "$elemMatch": { "booked": false }
                 }
-            }, function (err, hotel) {
+            }, {"name": 1, "rooms.$": 1 },
+            function (err, hotel) {
                 if (err)
                     res.send(err);
 
                 res.json(hotel);
             }
         );
-
-        // res.json(guestCoordinates);
     });
+
+router.post('/hotels/book', function(req, res) {
+    Hotel.update(
+        {
+            "_id": req.body.hotelId,
+            "rooms.id": req.body.room_id
+        },
+        { $set: { "rooms.$.booked": true } },
+        function (err, raw) {
+            if (err)
+                res.send(err);
+
+            res.json(raw);
+        }
+    );
+
+});
 
 app.use("/api", router);
 
