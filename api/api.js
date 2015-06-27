@@ -96,7 +96,7 @@ router.post("/hotels/:hotel_id/book", function(req, res) {
             "_id": req.params.hotel_id,
             "rooms.id": req.body.room_id
         },
-        { $set: { "rooms.$.booked": true, "rooms.$.guest": req.body.guest } },
+        { $set: { "rooms.$.booked": true, "rooms.$.guest.name": req.body.guest.name } },
         function (err, raw) {
             if (err)
                 res.send(err);
@@ -119,7 +119,7 @@ router.post("/hotels/:hotel_id/reset", function (req, res) {
             "_id": req.params.hotel_id,
             "rooms": { "$elemMatch": { booked: true } }
         },
-        { $set: { "rooms.$.booked": false } },
+        { $set: { "rooms.$.booked": false, "rooms.$.guest.tasks": [] } },
         function (err, raw) {
             if (err)
                 res.send(err);
