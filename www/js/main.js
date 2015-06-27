@@ -9,9 +9,7 @@ $( document ).ready(function() {
 	HandlebarsIntl.registerWith(Handlebars);
 
 	socket.on('update', function(){
-
-		// get 
-
+		$.playSound('sounds/reception_bell');
 		Materialize.toast('<i class="material-icons yellow">trending_flat</i> <span> &nbsp;&nbsp; new Task added', 3000);
 
 	  	getRooms();
@@ -20,11 +18,13 @@ $( document ).ready(function() {
 
 
 	socket.on('remove', function(){
+		$.playSound('sounds/reception_bell');
 		Materialize.toast('<i class="material-icons red">delete</i> <span> &nbsp;&nbsp; cancle Booking', 3000);
 		getRooms();
 	});
 
 	socket.on('add', function(){
+		$.playSound('sounds/cash_register');
 		Materialize.toast('<i class="material-icons green">add</i> <span> &nbsp;&nbsp; new Booking', 3000);
 		getRooms();
 	});
@@ -45,7 +45,7 @@ $( document ).ready(function() {
 		$.ajax({
       type: "POST",
       url: allHotelsUrl,
-      data: {"hotelId":hotelId, "taskId": taskId},
+      data: {"hotelId": hotelId, "taskId": taskId},
       contentType: "application/json",
       success: function( response ){
 
