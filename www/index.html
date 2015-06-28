@@ -84,10 +84,7 @@
           <li class="{{this.booked}} room-id" id="{{id}}">
             <div class="collapsible-header">
               <i class="material-icons">vpn_key</i>
-                Floor: {{floor}} |
-                Room: {{roomNumber}} 
-              
-              
+                <span class="room-number">Room: {{roomNumber}} <span class="floor-number"> | Floor: {{floor}}</span></span>
               <a href="#!" class="secondary-content has_{{guest.tasks.length}}">{{guest.tasks.length}}</a>
             </div>
               <div class="collapsible-body">
@@ -97,7 +94,7 @@
                      <li class="collection-item">Number Of Adults: <span class="badge">{{numberOfAdults}}</span></li>
                   
                     {{#each guest.tasks}}
-                        <li class="collection-item">
+                        <li class="collection-item service">
                           <input type="checkbox" id="{{id}}" />
                           <label for="{{id}}"> {{name}} : {{formatDate sendDate day="numeric" month="long" year="numeric"}}</label>
                         </li>

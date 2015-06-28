@@ -1,15 +1,27 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { 
-  	background: #fcfcfc;
+body {
+	background: #fcfcfc;
 
-  }
+}
 
+
+h4 {
+	font-size: 20px;
+}
 
 .collection {
 	box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
 }
 
 .sidebar {
+}
+
+.collection-item {
+	font-size: 14px;
+}
+
+.collection-item.service {
+	font-size: 15px;
 }
 
 .collection .collection-item.avatar {
@@ -29,13 +41,25 @@
 	display: none;
 }
 
+.room-number {
+	font-size: 16px;
+}
 
+.floor-number {
+	font-size: 14px;
+	color: rgba(0, 0, 0, .7);
+}
 
 .card-title {
 	width: 100%;
-	background: #26a69a;
-	padding-top: 5px !important;
-  padding-bottom: 5px !important;
+	background: #0288d1;
+}
+
+.card .card-image .card-title {
+	padding: 20px;
+	display: block;
+	margin-top: -0.3em;
+	position: relative;
 }
 
 .collapsible-body .inner {
@@ -43,8 +67,30 @@
 	margin-left: 5%;
 }
 
-.secondary-content.has_0 {
-	color: gray;
+.secondary-content, span.badge, label {
+	color: rgba(0, 0, 0, .7);
+}
+
+#hotel-entry .secondary-content {
+	background-color: #ff5252;
+	border-radius: 30px;
+	width: 2em;
+	height: 2em;
+	text-align: center;
+	line-height: 30px;
+	color: white;
+	margin-top: .5rem;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+i.material-icons {
+	color: rgba(0, 0, 0, .7);
+}
+
+#hotel-entry .secondary-content.has_0 {
+	color: rgba(0, 0, 0, .3);
+	background: none;
+	box-shadow: none;
 }
 @media only screen and (min-width: 601px) {
 	#main {
@@ -55,7 +101,7 @@
 
 @media only screen and (max-width: 992px) and (min-width: 601px){
 	#toast-container {
-	    left: auto !important;
-	    min-width: auto;
+		left: auto !important;
+		min-width: auto;
 	}
 }
