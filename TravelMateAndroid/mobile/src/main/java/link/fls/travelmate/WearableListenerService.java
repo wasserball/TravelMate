@@ -9,6 +9,7 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by frederik on 27.06.15.
@@ -16,6 +17,9 @@ import java.io.IOException;
 public class WearableListenerService extends com.google.android.gms.wearable.WearableListenerService {
 
     public final static String ACTION_BOOK_HOTEL = "BOOK_HOTEL";
+    public final static String ACTION_CREATE_TASK = "CREATE_TASK";
+
+    public final static String TEST_HOTEL_ID = "558ee16be2037ab74c1aa724";
 
     private final static String API_PATH = "http://192.168.241.250:8080/api";
 
@@ -28,6 +32,16 @@ public class WearableListenerService extends com.google.android.gms.wearable.Wea
         if(messageEvent.getPath().equals(ACTION_BOOK_HOTEL)) {
             String which = messageEvent.getData().toString();
             bookHotel("","","");
+        }
+
+        if(messageEvent.getPath().equals(ACTION_CREATE_TASK)) {
+            String which = null;
+            try {
+                which = new String(messageEvent.getData(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            createTask(which);
         }
     }
 
@@ -47,7 +61,7 @@ public class WearableListenerService extends com.google.android.gms.wearable.Wea
 
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .url(API_PATH + "/hotels/558ecb886a01239c46bfded5/book")
+                .url(API_PATH + "/hotels/" + TEST_HOTEL_ID + "/book")
                 .post(body)
                 .build();
 
@@ -63,6 +77,36 @@ public class WearableListenerService extends com.google.android.gms.wearable.Wea
             }
         });
 
+    }
+
+    private void createTask(String what) {
+        String json = "{\n" +
+                "  \"room_id\": \"room2\",\n" +
+                "  \"sendDate\": \"2015-06-28T08:00:00.511Z\",\n" +
+                "  \"name\": \"" + what + "\"\n" +
+                "}";
+
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(API_PATH + "/hotels/" + TEST_HOTEL_ID + "/service")
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+
+            }
+        });
 
     }
+
+
 }

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutInroom"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:clickable="true"
     tools:deviceIds="wear">
 
     <TextView
+        android:id="@+id/textViewInRoomTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Guten Abend!"
@@ -15,9 +18,10 @@
         android:textSize="20sp"/>
 
     <TextView
+        android:id="@+id/textViewInRoomDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Möchten Sie Ihre Handtücher wechseln lassen?"
+        android:text="Hier können Sie mit einem Tipp Ihren Roomservice buchen."
         android:gravity="center"
         android:textColor="@color/grey_light"
         android:textSize="15sp" />
