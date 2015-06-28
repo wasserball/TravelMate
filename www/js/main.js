@@ -6,19 +6,19 @@ $(document).ready(function () {
 
 	socket.on('update', function(){
 		$.playSound('sounds/reception_bell');
-		Materialize.toast('<i class="material-icons medium font-white">recent_actors</i> <span> &nbsp;&nbsp; new Task added', 3000);
+		Materialize.toast('<i class="material-icons medium font-white">recent_actors</i> <span> &nbsp;&nbsp; New Task added', 30000);
 	  	getRooms();
 	});
 
 	socket.on('remove', function(){
 		$.playSound('sounds/recycle_bin');
-		Materialize.toast('<i class="material-icons medium font-white">delete</i> <span> &nbsp;&nbsp; Status Updated', 3000);
+		Materialize.toast('<i class="material-icons medium font-white">delete</i> <span> &nbsp;&nbsp; Status Updated', 30000);
 		getRooms();
 	});
 
 	socket.on('add', function(){
 		$.playSound('sounds/cash_register');
-		Materialize.toast('<i class="material-icons medium font-white">payment</i> <span> &nbsp;&nbsp; new Booking', 3000);
+		Materialize.toast('<i class="material-icons medium font-white">payment</i> <span> &nbsp;&nbsp; New Booking', 30000);
 		getRooms();
 	});
 
