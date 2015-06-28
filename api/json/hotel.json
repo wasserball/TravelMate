@@ -45,7 +45,16 @@
           "nameFirst": "Robin",
           "nameLast": "Spates"
         },
-        "tasks": []
+        "tasks": [
+          {
+            "name": "Minibar auffüllen",
+            "sendDate": "2015-06-28T08:00:00.511Z"
+          },
+          {
+            "name": "Handtücher wechseln",
+            "sendDate": "2015-06-28T08:00:00.511Z"
+          }
+        ]
       },
       "features": {
         "wifi": true,
@@ -73,13 +82,6 @@
       "costPerNightInEuro": 49.05,
       "roomNumber": 267,
       "floor": 10,
-      "guest": {
-        "name": {
-          "nameFirst": "Evelyne",
-          "nameLast": "Alvardo"
-        },
-        "tasks": []
-      },
       "features": {
         "wifi": true,
         "minibar": false
@@ -88,7 +90,7 @@
         "from": "2015-06-27T18:25:43.511Z",
         "to": "2015-07-04T18:25:43.511Z"
       },
-      "booked": true,
+      "booked": false,
       "bookingDates": [
         {
           "from": "2015-06-27T18:25:43.511Z",
@@ -111,7 +113,12 @@
           "nameFirst": "Yolando",
           "nameLast": "Finkelstein"
         },
-        "tasks": []
+        "tasks": [
+          {
+            "name": "Handtücher wechseln",
+            "sendDate": "2015-06-28T08:00:00.511Z"
+          }
+        ]
       },
       "features": {
         "wifi": true,
@@ -144,7 +151,16 @@
           "nameFirst": "Trudi",
           "nameLast": "Baier"
         },
-        "tasks": []
+        "tasks": [
+          {
+            "name": "Minibar auffüllen",
+            "sendDate": "2015-06-28T08:00:00.511Z"
+          },
+          {
+            "name": "Neues Duschgel",
+            "sendDate": "2015-06-29T08:00:00.511Z"
+          }
+          ]
       },
       "features": {
         "wifi": true,
@@ -204,6 +220,13 @@
       "costPerNightInEuro": 49.05,
       "roomNumber": 34,
       "floor": 1,
+      "guest": {
+        "name": {
+          "nameFirst": "Evelyne",
+          "nameLast": "Alvardo"
+        },
+        "tasks": []
+      },
       "features": {
         "wifi": true,
         "minibar": false
@@ -212,7 +235,7 @@
         "from": "2015-06-27T18:25:43.511Z",
         "to": "2015-07-04T18:25:43.511Z"
       },
-      "booked": false,
+      "booked": true,
       "bookingDates": [
         {
           "from": "2015-06-27T18:25:43.511Z",
