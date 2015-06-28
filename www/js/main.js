@@ -27,8 +27,6 @@ $( document ).ready(function() {
 		getRooms();
 	});
 
-	
-
 	function initCollapsible () {
 		$('.collapsible').collapsible({
       accordion : false
@@ -44,8 +42,6 @@ $( document ).ready(function() {
 		console.log(url);
 		var data = JSON.stringify({"room_id": roomId});
 
-		console.log(data);
-
 		$.ajax({
       type: "POST",
       url: url,
@@ -55,36 +51,30 @@ $( document ).ready(function() {
 
       	var counter = $('#'+taskId).closest('.room-id').find('.secondary-content');
       	counter.html(parseInt(counter.html()) - 1);
-
       	if(response){
       		$('#'+taskId).closest('li').slideUp( 1000, function() {
 				    $('#'+taskId).closest('li').remove();
 
 				  });
-
       	}
-
-      	console.log(response);
-
       },
       error: function( error ){
           // Log any error.
           console.log( "ERROR:", error );
       }
 	  });
-
-
 	});
-		
+	
 	function getRooms () {
 		console.log('getRooms');
 
+		var currentOpenId = $('.room-id.active').attr('id');
 		$.ajax({
       type: "GET",
       url: allHotelsUrl,
       contentType: "application/json",
       success: function( response ){
-      	renderRooms(response[0]);
+      	renderRooms(response[0], currentOpenId);
       },
       error: function( error ){
           // Log any error.
@@ -94,9 +84,8 @@ $( document ).ready(function() {
 
 	}
 
-	function renderRooms (hotel) {
+	function renderRooms (hotel, id) {
 
-		console.log(hotel);
 
 		var source   = $("#hotel-template").html();
 		var template = Handlebars.compile(source);
@@ -130,6 +119,21 @@ $( document ).ready(function() {
 		$('#hotel-entry').html(html);
 
 		initCollapsible();
+
+		if(id !== undefined){
+			var open = $('#'+id);
+			open.addClass('active');
+			open.find('.collapsible-header').addClass('active');
+			
+
+
+			open.find('.collapsible-body').show();
+
+
+
+			console.log(id);
+		}
+
 	}
 
 	
