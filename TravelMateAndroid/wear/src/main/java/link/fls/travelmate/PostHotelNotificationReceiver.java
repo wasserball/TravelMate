@@ -91,20 +91,54 @@ public class PostHotelNotificationReceiver extends BroadcastReceiver {
     }
 
     private void showInRoomActivity(Context context) {
-        Intent displayIntent = new Intent(context, InRoomActivity.class);
         Intent helpdeskIntent = new Intent(context, QrCodeActivity.class);
 
+        Intent displayIntent = new Intent(context, InRoomActivity.class);
+        displayIntent.putExtra(InRoomActivity.EXTRA_TITLE, "Guten Abend!");
+        displayIntent.putExtra(InRoomActivity.EXTRA_DESCRIPTION, "Hier können Sie mit einem Tipp Ihren Roomservice buchen. Probieren Sie es aus!");
         Notification notification = new Notification.Builder(context)
+                .setGroup("roomService")
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle("Guten Abend!")
                 .extend(new Notification.WearableExtender()
-                        .setHintHideIcon(true)
-                        .setCustomSizePreset(Notification.WearableExtender.SIZE_MEDIUM)
+                        .setCustomSizePreset(Notification.WearableExtender.SIZE_LARGE)
                         .setBackground(BitmapFactory.decodeResource(context.getResources(), R.drawable.dummy_inroom))
-                        .setDisplayIntent(PendingIntent.getActivity(context, 20, displayIntent, PendingIntent.FLAG_UPDATE_CURRENT)))
+                        .setDisplayIntent(PendingIntent.getActivity(context, 10, displayIntent, PendingIntent.FLAG_UPDATE_CURRENT)))
                 .addAction(new Notification.Action(R.drawable.ic_action_helpdesk, "Helpdesk anrufen", PendingIntent.getActivity(context, 0, helpdeskIntent, PendingIntent.FLAG_CANCEL_CURRENT)))
                 .build();
 
-        ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(20, notification);
+        Intent displayIntentBettlaken = new Intent(context, InRoomActivity.class);
+        displayIntentBettlaken.putExtra(InRoomActivity.EXTRA_TITLE, "Neue Bettlaken");
+        displayIntentBettlaken.putExtra(InRoomActivity.EXTRA_DESCRIPTION, "Tippen, um neue Bettlaken zu erhalten.");
+        Notification notification2 = new Notification.Builder(context)
+                .setGroup("roomService")
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Neue Bettlaken")
+                .extend(new Notification.WearableExtender()
+                        .setHintHideIcon(true)
+                        .setCustomSizePreset(Notification.WearableExtender.SIZE_SMALL)
+                        .setBackground(BitmapFactory.decodeResource(context.getResources(), R.drawable.background_bedsheet))
+                        .setDisplayIntent(PendingIntent.getActivity(context, 20, displayIntentBettlaken, PendingIntent.FLAG_UPDATE_CURRENT)))
+                .addAction(new Notification.Action(R.drawable.ic_action_helpdesk, "Helpdesk anrufen", PendingIntent.getActivity(context, 0, helpdeskIntent, PendingIntent.FLAG_CANCEL_CURRENT)))
+                .build();
+
+        Intent displayIntentDuschgel = new Intent(context, InRoomActivity.class);
+        displayIntentDuschgel.putExtra(InRoomActivity.EXTRA_TITLE, "Neues Duschgel");
+        displayIntentDuschgel.putExtra(InRoomActivity.EXTRA_DESCRIPTION, "Tippen, um neues Duschgel zu erhalten.");
+        Notification notification3 = new Notification.Builder(context)
+                .setGroup("roomService")
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Neues Duschgel")
+                .extend(new Notification.WearableExtender()
+                        .setHintHideIcon(true)
+                        .setCustomSizePreset(Notification.WearableExtender.SIZE_SMALL)
+                        .setBackground(BitmapFactory.decodeResource(context.getResources(), R.drawable.background_showergel))
+                        .setDisplayIntent(PendingIntent.getActivity(context, 30, displayIntentDuschgel, PendingIntent.FLAG_UPDATE_CURRENT)))
+                .addAction(new Notification.Action(R.drawable.ic_action_helpdesk, "Helpdesk anrufen", PendingIntent.getActivity(context, 0, helpdeskIntent, PendingIntent.FLAG_CANCEL_CURRENT)))
+                .build();
+
+        ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(10, notification3);
+        ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(20, notification2);
+        ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).notify(30, notification);
     }
 }
