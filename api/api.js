@@ -180,11 +180,12 @@
     router.post("/hotels/:hotel_id/reset", function (req, res) {
 
         var hotelId = req.params.hotel_id;
+        var roomId = req.body.room_id;
 
         Hotel.update(
             {
                 "_id": hotelId,
-                "rooms": { "$elemMatch": { booked: true } }
+                "rooms": { "$elemMatch": { id: roomId } }
             },
             { $set: { "rooms.$.booked": false, "rooms.$.guest.tasks": [] } },
             function (err, raw) {
