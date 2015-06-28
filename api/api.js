@@ -29,7 +29,8 @@
 
             hotel.save(function(err) {
                 if (err) { return res.send(err); }
-                res.json({ message: "hotel " + hotel.name + " created!" });
+                console.log(hotel.name + " created!\n");
+                res.json({ message: hotel.name + " created!" });
             });
         })
 
@@ -58,7 +59,7 @@
             }, {"name": 1, "rooms.$": 1 },
             function (err, hotel) {
                 if (err) { return res.send(err); }
-
+                console.log("Nearest hotel found was: " + hotel.name + "\n");
                 res.json(hotel);
             }
         );
@@ -78,7 +79,7 @@
                     if (error) {
                         return res.send(error);
                     } else {
-                        console.log("hotel " + hotel.name + " updated");
+                        console.log("hotel " + hotel.name + " updated" + "\n");
                     }
                 });
             }
@@ -100,7 +101,39 @@
 
                 updateHotel(hotelId, "/add");
 
-                var responseMessage = "Room " + req.body.room_id + " in hotel with id " + hotelId + " booked.";
+                var responseMessage = "Room " + req.body.room_id + " in hotel with the id " + hotelId + " was booked.\n";
+                console.log(responseMessage);
+
+                res.json({ message: responseMessage });
+            }
+        );
+
+    });
+
+    router.post("/hotels/:hotel_id/service", function (req, res) {
+
+        var hotelId = req.params.hotel_id;
+
+        var service = {
+            "name": req.body.name,
+            "sendDate": req.body.sendDate,
+            "id": mongoose.Types.ObjectId()
+        };
+
+        Hotel.update(
+            {
+                "_id": hotelId,
+                "rooms.id": req.body.room_id
+            },
+            { "$push": { "rooms.$.guest.tasks": service } },
+            function (err, raw) {
+                if (err) { return res.send(err); }
+
+                updateHotel(hotelId, "/update");
+
+                var responseMessage = "Room " + req.body.room_id + " in hotel with id " + hotelId + " has a new service registered.\n";
+                console.log(responseMessage);
+
                 res.json({ message: responseMessage });
             }
         );
@@ -134,7 +167,11 @@
                 hotel.save(function(err) {
                     if (err) { return res.send(err); }
 
-                    res.json({ message: "hotel " + hotel.name + " cleared service with the id: " + serviceId + "!" });
+                    updateHotel(hotelId, "/remove");
+
+                    var resetMessage = hotel.name + " cleared service with the id: " + serviceId + "!\n";
+                    console.log(resetMessage);
+                    res.json({ message: resetMessage });
                 });
             }
         );
@@ -155,37 +192,12 @@
 
                 updateHotel(hotelId, "/remove");
 
+                var resetMessage = "Bookings for hotel with id " + hotelId + " were reset!\n";
+                console.log(resetMessage);
+
                 res.json(raw);
             }
         );
-    });
-
-    router.post("/hotels/:hotel_id/service", function (req, res) {
-
-        var hotelId = req.params.hotel_id;
-
-        var service = {
-            "name": req.body.name,
-            "sendDate": req.body.sendDate,
-            "id": mongoose.Types.ObjectId()
-        };
-
-        Hotel.update(
-            {
-                "_id": hotelId,
-                "rooms.id": req.body.room_id
-            },
-            { "$push": { "rooms.$.guest.tasks": service } },
-            function (err, raw) {
-                if (err) { return res.send(err); }
-
-                updateHotel(hotelId, "/update");
-
-                var responseMessage = "Room " + req.body.room_id + " in hotel with id " + req.body.hotelId + " has a new service registered.";
-                res.json({ message: responseMessage });
-            }
-        );
-
     });
 
     app.use("/api", router);
