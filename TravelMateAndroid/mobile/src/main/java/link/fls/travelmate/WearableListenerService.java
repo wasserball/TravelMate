@@ -19,7 +19,7 @@ public class WearableListenerService extends com.google.android.gms.wearable.Wea
     public final static String ACTION_BOOK_HOTEL = "BOOK_HOTEL";
     public final static String ACTION_CREATE_TASK = "CREATE_TASK";
 
-    public final static String TEST_HOTEL_ID = "558ee16be2037ab74c1aa724";
+    public final static String TEST_HOTEL_ID = "558fd2e2cd1edeef77ae9dc4";
 
     private final static String API_PATH = "http://192.168.241.250:8080/api";
 
@@ -51,8 +51,8 @@ public class WearableListenerService extends com.google.android.gms.wearable.Wea
                 "  \"room_id\": \"room2\",\n" +
                 "  \"guest\": {\n" +
                 "    \"name\": {\n" +
-                "      \"nameFirst\": \"Maximilian\",\n" +
-                "      \"nameLast\": \"Kleve\"\n" +
+                "      \"nameFirst\": \"Frederik\",\n" +
+                "      \"nameLast\": \"Schweiger\"\n" +
                 "    }\n" +
                 "  }\n" +
                 "}";

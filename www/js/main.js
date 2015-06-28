@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 	socket.on('update', function(){
 		$.playSound('sounds/reception_bell');
-		Materialize.toast('<i class="material-icons medium font-white">recent_actors</i> <span> &nbsp;&nbsp; new Task added', 3000);
+		Materialize.toast('<i class="material-icons medium font-white">recent_actors</i> <span> &nbsp;&nbsp; New Task added', 3000);
 	  	getRooms();
 	});
 
@@ -18,7 +18,7 @@ $(document).ready(function () {
 
 	socket.on('add', function(){
 		$.playSound('sounds/cash_register');
-		Materialize.toast('<i class="material-icons medium font-white">payment</i> <span> &nbsp;&nbsp; new Booking', 3000);
+		Materialize.toast('<i class="material-icons medium font-white">payment</i> <span> &nbsp;&nbsp; New Booking', 3000);
 		getRooms();
 	});
 
