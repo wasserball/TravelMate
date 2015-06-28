@@ -13,7 +13,9 @@ h4 {
 	box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
 }
 
-.sidebar {
+.hotel-logo {
+	margin: 16px 0;
+	margin-left: 8px;
 }
 
 .collection-item {
@@ -94,7 +96,7 @@ i.material-icons {
 }
 @media only screen and (min-width: 601px) {
 	#main {
-		margin-top: 100px;
+		margin-top: 118px;
 	}
 
 }
