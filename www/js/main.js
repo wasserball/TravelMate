@@ -1,12 +1,7 @@
-/*{{formatDate this.guest.stay.from day="numeric" month="long" year="numeric"}} - 
-            {{formatDate this.guest.stay.to day="numeric" month="long" year="numeric"}} */
-
-$( document ).ready(function() {
-
+$(document).ready(function () {
 
 	var socket = io();
 	var allHotelsUrl = 'http://192.168.241.250:8080/api/hotels';
-
 	HandlebarsIntl.registerWith(Handlebars);
 
 	socket.on('update', function(){
@@ -17,7 +12,7 @@ $( document ).ready(function() {
 
 	socket.on('remove', function(){
 		$.playSound('sounds/recycle_bin');
-		Materialize.toast('<i class="material-icons red">delete</i> <span> &nbsp;&nbsp; cancle Booking', 3000);
+		Materialize.toast('<i class="material-icons red">delete</i> <span> &nbsp;&nbsp; Status Updated', 3000);
 		getRooms();
 	});
 
@@ -34,12 +29,10 @@ $( document ).ready(function() {
 	}
 
 	$( "#main" ).on( "change", "input", function() {
-
 		var hotelId = $(this).closest('.hotel-id').attr('id');
 		var roomId = $(this).closest('.room-id').attr('id'); 
 		var taskId = $( this ).attr('id');
 		var url = allHotelsUrl + '/' + hotelId + '/reset/' + taskId;
-		console.log(url);
 		var data = JSON.stringify({"room_id": roomId});
 
 		$.ajax({
@@ -48,13 +41,11 @@ $( document ).ready(function() {
       data: data,
       contentType: "application/json",
       success: function( response ){
-
       	var counter = $('#'+taskId).closest('.room-id').find('.secondary-content');
       	counter.html(parseInt(counter.html()) - 1);
       	if(response){
       		$('#'+taskId).closest('li').slideUp( 1000, function() {
 				    $('#'+taskId).closest('li').remove();
-
 				  });
       	}
       },
@@ -66,8 +57,6 @@ $( document ).ready(function() {
 	});
 	
 	function getRooms () {
-		console.log('getRooms');
-
 		var currentOpenId = $('.room-id.active').attr('id');
 		$.ajax({
       type: "GET",
@@ -85,14 +74,11 @@ $( document ).ready(function() {
 	}
 
 	function renderRooms (hotel, id) {
-
-
 		var source   = $("#hotel-template").html();
 		var template = Handlebars.compile(source);
 		var context = {url: "img/hotels/melia.jpeg", name: hotel.name, location: hotel.address};
 		var html    = template(context);
 		$('#hotel').html(html);
-
 		source   = $("#hotelrooms-template").html();
 		template = Handlebars.compile(source);
 		var total = hotel.rooms.length;
@@ -108,38 +94,21 @@ $( document ).ready(function() {
 		context = {total: total, booked: booked, free: free };
 		html    = template(context);
 		$('#hotelrooms').html(html);
-
-
-
-
 		source   = $("#hotel-entry-template").html();
 		template = Handlebars.compile(source);
 		context = {rooms: hotel.rooms, hotelid: hotel._id};
 		html    = template(context);
 		$('#hotel-entry').html(html);
-
 		initCollapsible();
 
 		if(id !== undefined){
 			var open = $('#'+id);
 			open.addClass('active');
 			open.find('.collapsible-header').addClass('active');
-			
-
-
 			open.find('.collapsible-body').show();
-
-
-
-			console.log(id);
 		}
-
 	}
 
-	
 	getRooms();
-
-
-	
 
 });

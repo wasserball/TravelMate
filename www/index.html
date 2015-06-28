@@ -12,53 +12,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
     <script src="js/handlebars-v3.0.3.js"></script>
     <script src="js/handlebars-intl.min.js"></script>
-
     <script src="js/jquery.playSound.js"></script>
-
     <link rel="stylesheet" href="css/main.css">
   </head>
   
   <body>
-      <!-- Navbar goes here -->
-      <!-- Page Layout here -->
-      <div class="row">
-        <div class="col s12 m4 l3 sidebar">
-          <!-- Grey navigation panel -->
-          <div class="row">
-
-            <!--ul class="collection">
+    <!-- Navbar goes here -->
+    <!-- Page Layout here -->
+    <div class="row">
+      <div class="col s12 m4 l3 sidebar">
+        <!-- Grey navigation panel -->
+        <div class="row">
+          <!--ul class="collection">
 
          <li class="logo"><a id="logo-container" href="http://materializecss.com/" class="brand-logo">
             <img src="img/trivago_logo.png"></a>
           </li>
         </ul-->
-            <div class="col s12">
-              <img src="img/hotels/melia-logo.png">
-              <div id="hotel"></div>
-
-              <ul class="collection with-header">
-            <li class="collection-header">
-              <h4>Rooms
-                <a href="#!" class="secondary-content"><i class="Small material-icons">vpn_key</i></a>
-              </h4>
-            </li>
-            <div id="hotelrooms"></div>
-          </ul>
-
-
-            </div>
+          <div class="col s12">
+            <img src="img/hotels/melia-logo.png">
+            <div id="hotel"></div>
+            <ul class="collection with-header">
+              <li class="collection-header">
+                <h4>Rooms
+                  <a href="#!" class="secondary-content"><i class="Small material-icons">vpn_key</i></a>
+                </h4>
+              </li>
+              <div id="hotelrooms"></div>
+            </ul>
           </div>
-          
-        </div>
-        <div class="col s12 m6 l7" id="main">
-          <div id="hotel-entry"></div>
         </div>
       </div>
-
-
-      <script src="js/main.js"></script>
-      <script id="hotel-template" type="text/x-handlebars-template">
-        <div class="card">
+      <div class="col s12 m6 l7" id="main">
+        <div id="hotel-entry"></div>
+      </div>
+    </div>
+    <script src="js/main.js"></script>
+    <script id="hotel-template" type="text/x-handlebars-template">
+      <div class="card">
           <div class="card-image">
             <img src="{{url}}">
             <span class="card-title">{{name}}</span>
@@ -69,9 +60,9 @@
             {{location.country}}
           </div>
         </div>
-      </script>
-      <script id="hotelrooms-template" type="text/x-handlebars-template">
-        <li class="collection-item">
+    </script>
+    <script id="hotelrooms-template" type="text/x-handlebars-template">
+      <li class="collection-item">
           <div>Total
             <a href="#!" class="secondary-content">{{total}}</a>
           </div>
@@ -86,9 +77,9 @@
             <a href="#!" class="secondary-content">{{free}}</a>
           </div>
         </li>
-      </script>
-      <script id="hotel-entry-template" type="text/x-handlebars-template">      
-        <ul class="collapsible popout hotel-id" id="{{hotelid}}" data-collapsible="accordion" >
+    </script>
+    <script id="hotel-entry-template" type="text/x-handlebars-template">
+      <ul class="collapsible popout hotel-id" id="{{hotelid}}" data-collapsible="accordion" >
         {{#each rooms}}
           <li class="{{this.booked}} room-id" id="{{id}}">
             <div class="collapsible-header">
@@ -97,7 +88,7 @@
                 Room: {{roomNumber}} 
               
               
-              <a href="#!" class="secondary-content">{{guest.tasks.length}}</a>
+              <a href="#!" class="secondary-content has_{{guest.tasks.length}}">{{guest.tasks.length}}</a>
             </div>
               <div class="collapsible-body">
                 <div class="inner">
@@ -117,7 +108,7 @@
           </li>
           {{/each}}
           </ul>
-      </script>
+    </script>
   </body>
 
 </html>
