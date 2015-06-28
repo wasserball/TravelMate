@@ -91,6 +91,16 @@ $(document).ready(function () {
 				free++;
 			}
 		}
+		hotel.rooms = hotel.rooms.sort(function(a, b){
+	    var keyA = new Date(a.roomNumber),
+		    keyB = new Date(b.roomNumber);
+		    // Compare the 2 dates
+		    if(keyA < keyB) return -1;
+		    if(keyA > keyB) return 1;
+		    return 0;
+		});
+
+		console.log(hotel.rooms);
 		context = {total: total, booked: booked, free: free };
 		html    = template(context);
 		$('#hotelrooms').html(html);
